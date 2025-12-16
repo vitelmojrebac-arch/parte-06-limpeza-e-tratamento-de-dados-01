@@ -1,0 +1,1479 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Módulo 5 Tarefa 1\n",
+    "## Base de nascidos vivos do DataSUS\n",
+    "O DataSUS disponibiliza diversos arquivos de dados com relação a seus segurados, conforme a [lei da transparência de informações públicas](https://www.sisgov.com/transparencia-acesso-informacao/#:~:text=A%20Lei%20da%20Transpar%C3%AAncia%20(LC,em%20um%20site%20na%20internet.). \n",
+    "\n",
+    "Essas informações podem ser obtidas pela internet [aqui](http://www2.datasus.gov.br/DATASUS/index.php?area=0901&item=1). Como o processo de obtenção desses arquivos foge um pouco do nosso escopo, deixamos o arquivo SINASC_RO_2019.csv` já como vai ser encontrado no DataSUS. O dicionário de dados está no arquivo `estrutura_sinasc_para_CD.pdf` (o nome do arquivo tal qual no portal do DataSUS).\n",
+    "\n",
+    "### Nosso objetivo\n",
+    "Queremos deixar uma base organizada para podermos estudar a relação entre partos com risco para o bebê e algumas condições como tempo de parto, consultas de pré-natal etc.\n",
+    "\n",
+    "#### Preparação da base\n",
+    "1. Carregue a base 'SINASC_RO_2019.csv'. Conte o número de registros e o número de registros não duplicados da base. Dica: você aprendeu um método que remove duplicados, encadeie este método com um outro método que conta o número de linhas. **Há linhas duplicadas?**  \n",
+    "\n",
+    "2. Conte o número de valores *missing* por variável.  \n",
+    "\n",
+    "3. Ok, no item anterior você deve ter achado pouco prático ler a informação de tantas variáveis, muitas delas nem devem ser interesantes. Então crie uma seleção dessa base somente com as colunas que interessam. São elas:\n",
+    "` \n",
+    "['LOCNASC', 'IDADEMAE', 'ESTCIVMAE', 'ESCMAE', 'QTDFILVIVO', \n",
+    "    'GESTACAO', 'GRAVIDEZ', 'CONSULTAS', 'APGAR5'] \n",
+    "`\n",
+    "Refaça a contagem de valores *missings*.  \n",
+    "\n",
+    "4. Apgar é uma *nota* que o pediatra dá ao bebê quando nasce de acordo com algumas características associadas principalmente à respiração. Apgar 1 e Apgar 5 são as notas 1 e 5 minutos do nascimento. Apgar5 será a nossa variável de interesse principal. Então remova todos os registros com Apgar5 não preenchido. Para esta seleção, conte novamente o número de linhas e o número de *missings*.  \n",
+    "\n",
+    "5. observe que as variáveis `['ESTCIVMAE', 'CONSULTAS']` possuem o código `9`, que significa *ignorado*. Vamos assumir que o não preenchido é o mesmo que o código `9`.<br>\n",
+    "6. Substitua os valores faltantes da quantitativa (`QTDFILVIVO`) por zero.  \n",
+    "7. Das restantes, decida que valore te parece mais adequado (um 'não preenchido' ou um valor 'mais provável' como no item anterior) e preencha. Justifique. Lembre-se de que tratamento de dados é trabalho do cientista, e que estamos tomando decisões a todo o momento - não há necessariamente certo e errado aqui.  \n",
+    "8. O Apgar possui uma classificação indicando se o bebê passou por asfixia:\n",
+    "- Entre 8 e 10 está em uma faixa 'normal'. \n",
+    "- Entre 6 e 7, significa que o recém-nascido passou por 'asfixia leve'. \n",
+    "- Entre 4 e 5 significa 'asfixia moderada'.\n",
+    "- Entre 0 e 3 significa 'asfixia severa'.  \n",
+    "\n",
+    "Crie uma categorização dessa variável com essa codificação e calcule as frequências dessa categorização.  \n",
+    "<br>\n",
+    "9. Renomeie as variáveis para que fiquem no *snake case*, ou seja, em letras minúsculas, com um *underscore* entre as palávras. Dica: repare que se você não quiser criar um *dataframe* novo, você vai precisar usar a opção `inplace = True`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(27028, 69)\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "(27028, 69)"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import requests\n",
+    "\n",
+    "# 1) seu código aqui\n",
+    "sinasc = pd.read_csv('SINASC_RO_2019.csv')\n",
+    "print(sinasc.shape)\n",
+    "sinasc.drop_duplicates().shape\n",
+    "# Não há duplicados"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 2) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 3) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 4) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 5) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 6) Seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 7) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 8) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 9) seu código aqui\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFAS -------------------------------------------------------------------------------"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "TAREFA 01 - Preparação da base\n",
+    "1.Carregue a base 'SINASC_RO_2019.csv'. Conte o número de registros e o número de registros não duplicados da base. Dica: você aprendeu um método que remove duplicados, encadeie este método com um outro método que conta o número de linhas. Há linhas duplicadas?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 01"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Tarefa 1 — Carregamento da Base SINASC\n",
+    "Objetivo: carregar o arquivo CSV contendo os registros de nascidos vivos.\n",
+    "CODIGO"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Arquivos encontrados na pasta atual:\n",
+      "['-fazendo.ipynb', '.ipynb_checkpoints', 'Estrutura_SINASC_para_CD.pdf', 'Mod5Ex_aulas_01a03.ipynb', 'SINASC_RO_2019.csv']\n",
+      "\n",
+      "Arquivo detectado automaticamente: SINASC_RO_2019.csv\n",
+      "\n",
+      "Prévia da base carregada:\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>ORIGEM,\"CODESTAB\",\"CODMUNNASC\",\"LOCNASC\",\"IDADEMAE\",\"ESTCIVMAE\",\"ESCMAE\",\"CODOCUPMAE\",\"QTDFILVIVO\",\"QTDFILMORT\",\"CODMUNRES\",\"GESTACAO\",\"GRAVIDEZ\",\"PARTO\",\"CONSULTAS\",\"DTNASC\",\"HORANASC\",\"SEXO\",\"APGAR1\",\"APGAR5\",\"RACACOR\",\"PESO\",\"IDANOMAL\",\"DTCADASTRO\",\"CODANOMAL\",\"NUMEROLOTE\",\"VERSAOSIST\",\"DTRECEBIM\",\"DIFDATA\",\"DTRECORIGA\",\"NATURALMAE\",\"CODMUNNATU\",\"CODUFNATU\",\"ESCMAE2010\",\"SERIESCMAE\",\"DTNASCMAE\",\"RACACORMAE\",\"QTDGESTANT\",\"QTDPARTNOR\",\"QTDPARTCES\",\"IDADEPAI\",\"DTULTMENST\",\"SEMAGESTAC\",\"TPMETESTIM\",\"CONSPRENAT\",\"MESPRENAT\",\"TPAPRESENT\",\"STTRABPART\",\"STCESPARTO\",\"TPNASCASSI\",\"TPFUNCRESP\",\"TPDOCRESP\",\"DTDECLARAC\",\"ESCMAEAGR1\",\"STDNEPIDEM\",\"STDNNOVA\",\"CODPAISRES\",\"TPROBSON\",\"PARIDADE\",\"KOTELCHUCK\",\"CONTADOR\",\"munResStatus\",\"munResTipo\",\"munResNome\",\"munResUf\",\"munResLat\",\"munResLon\",\"munResAlt\",\"munResArea\"</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1,\"2679477\",\"110001\",\"1\",19,\"5\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1,\"2679477\",\"110001\",\"1\",29,\"2\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1,\"2679477\",\"110001\",\"1\",37,\"9\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1,\"2516500\",\"110001\",\"1\",30,\"5\",\"12 anos ou ma...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1,\"2516500\",\"110001\",\"1\",30,\"2\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  ORIGEM,\"CODESTAB\",\"CODMUNNASC\",\"LOCNASC\",\"IDADEMAE\",\"ESTCIVMAE\",\"ESCMAE\",\"CODOCUPMAE\",\"QTDFILVIVO\",\"QTDFILMORT\",\"CODMUNRES\",\"GESTACAO\",\"GRAVIDEZ\",\"PARTO\",\"CONSULTAS\",\"DTNASC\",\"HORANASC\",\"SEXO\",\"APGAR1\",\"APGAR5\",\"RACACOR\",\"PESO\",\"IDANOMAL\",\"DTCADASTRO\",\"CODANOMAL\",\"NUMEROLOTE\",\"VERSAOSIST\",\"DTRECEBIM\",\"DIFDATA\",\"DTRECORIGA\",\"NATURALMAE\",\"CODMUNNATU\",\"CODUFNATU\",\"ESCMAE2010\",\"SERIESCMAE\",\"DTNASCMAE\",\"RACACORMAE\",\"QTDGESTANT\",\"QTDPARTNOR\",\"QTDPARTCES\",\"IDADEPAI\",\"DTULTMENST\",\"SEMAGESTAC\",\"TPMETESTIM\",\"CONSPRENAT\",\"MESPRENAT\",\"TPAPRESENT\",\"STTRABPART\",\"STCESPARTO\",\"TPNASCASSI\",\"TPFUNCRESP\",\"TPDOCRESP\",\"DTDECLARAC\",\"ESCMAEAGR1\",\"STDNEPIDEM\",\"STDNNOVA\",\"CODPAISRES\",\"TPROBSON\",\"PARIDADE\",\"KOTELCHUCK\",\"CONTADOR\",\"munResStatus\",\"munResTipo\",\"munResNome\",\"munResUf\",\"munResLat\",\"munResLon\",\"munResAlt\",\"munResArea\"\n",
+       "0  1,\"2679477\",\"110001\",\"1\",19,\"5\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "1  1,\"2679477\",\"110001\",\"1\",29,\"2\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "2  1,\"2679477\",\"110001\",\"1\",37,\"9\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "3  1,\"2516500\",\"110001\",\"1\",30,\"5\",\"12 anos ou ma...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "4  1,\"2516500\",\"110001\",\"1\",30,\"2\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# =========================================\n",
+    "# TAREFA 01 — CARREGAR A BASE SINASC\n",
+    "# SEM ESPECIFICAR CAMINHO NA MÃO\n",
+    "# =========================================\n",
+    "\n",
+    "import os\n",
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "\n",
+    "# 1) Verifica arquivos disponíveis na pasta atual\n",
+    "print(\"Arquivos encontrados na pasta atual:\")\n",
+    "print(os.listdir())\n",
+    "\n",
+    "# 2) Identifica automaticamente o arquivo SINASC (qualquer nome que contenha 'SINASC')\n",
+    "arquivos = os.listdir()\n",
+    "base_sinasc = None\n",
+    "\n",
+    "for arq in arquivos:\n",
+    "    nome = arq.lower()\n",
+    "    if (\"sinasc\" in nome) and (nome.endswith(\".csv\")):\n",
+    "        base_sinasc = arq\n",
+    "        break\n",
+    "\n",
+    "# 3) Se não encontrou, avisa o usuário\n",
+    "if base_sinasc is None:\n",
+    "    raise FileNotFoundError(\"Nenhum arquivo CSV do SINASC encontrado nesta pasta.\")\n",
+    "\n",
+    "print(f\"\\nArquivo detectado automaticamente: {base_sinasc}\")\n",
+    "\n",
+    "# 4) Carrega o arquivo detectado\n",
+    "df = pd.read_csv(base_sinasc, sep=';', encoding='latin1')\n",
+    "\n",
+    "print(\"\\nPrévia da base carregada:\")\n",
+    "df.head()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>ORIGEM,\"CODESTAB\",\"CODMUNNASC\",\"LOCNASC\",\"IDADEMAE\",\"ESTCIVMAE\",\"ESCMAE\",\"CODOCUPMAE\",\"QTDFILVIVO\",\"QTDFILMORT\",\"CODMUNRES\",\"GESTACAO\",\"GRAVIDEZ\",\"PARTO\",\"CONSULTAS\",\"DTNASC\",\"HORANASC\",\"SEXO\",\"APGAR1\",\"APGAR5\",\"RACACOR\",\"PESO\",\"IDANOMAL\",\"DTCADASTRO\",\"CODANOMAL\",\"NUMEROLOTE\",\"VERSAOSIST\",\"DTRECEBIM\",\"DIFDATA\",\"DTRECORIGA\",\"NATURALMAE\",\"CODMUNNATU\",\"CODUFNATU\",\"ESCMAE2010\",\"SERIESCMAE\",\"DTNASCMAE\",\"RACACORMAE\",\"QTDGESTANT\",\"QTDPARTNOR\",\"QTDPARTCES\",\"IDADEPAI\",\"DTULTMENST\",\"SEMAGESTAC\",\"TPMETESTIM\",\"CONSPRENAT\",\"MESPRENAT\",\"TPAPRESENT\",\"STTRABPART\",\"STCESPARTO\",\"TPNASCASSI\",\"TPFUNCRESP\",\"TPDOCRESP\",\"DTDECLARAC\",\"ESCMAEAGR1\",\"STDNEPIDEM\",\"STDNNOVA\",\"CODPAISRES\",\"TPROBSON\",\"PARIDADE\",\"KOTELCHUCK\",\"CONTADOR\",\"munResStatus\",\"munResTipo\",\"munResNome\",\"munResUf\",\"munResLat\",\"munResLon\",\"munResAlt\",\"munResArea\"</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1,\"2679477\",\"110001\",\"1\",19,\"5\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1,\"2679477\",\"110001\",\"1\",29,\"2\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1,\"2679477\",\"110001\",\"1\",37,\"9\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1,\"2516500\",\"110001\",\"1\",30,\"5\",\"12 anos ou ma...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1,\"2516500\",\"110001\",\"1\",30,\"2\",\"8 a 11 anos\",...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  ORIGEM,\"CODESTAB\",\"CODMUNNASC\",\"LOCNASC\",\"IDADEMAE\",\"ESTCIVMAE\",\"ESCMAE\",\"CODOCUPMAE\",\"QTDFILVIVO\",\"QTDFILMORT\",\"CODMUNRES\",\"GESTACAO\",\"GRAVIDEZ\",\"PARTO\",\"CONSULTAS\",\"DTNASC\",\"HORANASC\",\"SEXO\",\"APGAR1\",\"APGAR5\",\"RACACOR\",\"PESO\",\"IDANOMAL\",\"DTCADASTRO\",\"CODANOMAL\",\"NUMEROLOTE\",\"VERSAOSIST\",\"DTRECEBIM\",\"DIFDATA\",\"DTRECORIGA\",\"NATURALMAE\",\"CODMUNNATU\",\"CODUFNATU\",\"ESCMAE2010\",\"SERIESCMAE\",\"DTNASCMAE\",\"RACACORMAE\",\"QTDGESTANT\",\"QTDPARTNOR\",\"QTDPARTCES\",\"IDADEPAI\",\"DTULTMENST\",\"SEMAGESTAC\",\"TPMETESTIM\",\"CONSPRENAT\",\"MESPRENAT\",\"TPAPRESENT\",\"STTRABPART\",\"STCESPARTO\",\"TPNASCASSI\",\"TPFUNCRESP\",\"TPDOCRESP\",\"DTDECLARAC\",\"ESCMAEAGR1\",\"STDNEPIDEM\",\"STDNNOVA\",\"CODPAISRES\",\"TPROBSON\",\"PARIDADE\",\"KOTELCHUCK\",\"CONTADOR\",\"munResStatus\",\"munResTipo\",\"munResNome\",\"munResUf\",\"munResLat\",\"munResLon\",\"munResAlt\",\"munResArea\"\n",
+       "0  1,\"2679477\",\"110001\",\"1\",19,\"5\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "1  1,\"2679477\",\"110001\",\"1\",29,\"2\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "2  1,\"2679477\",\"110001\",\"1\",37,\"9\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "3  1,\"2516500\",\"110001\",\"1\",30,\"5\",\"12 anos ou ma...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \n",
+       "4  1,\"2516500\",\"110001\",\"1\",30,\"2\",\"8 a 11 anos\",...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#versao 02 mais simples\n",
+    "\n",
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "\n",
+    "# Carrega a base (arquivo precisa estar na mesma pasta do .ipynb)\n",
+    "df = pd.read_csv(\"SINASC_RO_2019.csv\", sep=\";\", encoding=\"latin1\")\n",
+    "\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 02"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "2. Conte o número de valores missing por variável."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Colunas originais:\n",
+      "Index(['ORIGEM', 'CODESTAB', 'CODMUNNASC', 'LOCNASC', 'IDADEMAE', 'ESTCIVMAE',\n",
+      "       'ESCMAE', 'CODOCUPMAE', 'QTDFILVIVO', 'QTDFILMORT', 'CODMUNRES',\n",
+      "       'GESTACAO', 'GRAVIDEZ', 'PARTO', 'CONSULTAS', 'DTNASC', 'HORANASC',\n",
+      "       'SEXO', 'APGAR1', 'APGAR5', 'RACACOR', 'PESO', 'IDANOMAL', 'DTCADASTRO',\n",
+      "       'CODANOMAL', 'NUMEROLOTE', 'VERSAOSIST', 'DTRECEBIM', 'DIFDATA',\n",
+      "       'DTRECORIGA', 'NATURALMAE', 'CODMUNNATU', 'CODUFNATU', 'ESCMAE2010',\n",
+      "       'SERIESCMAE', 'DTNASCMAE', 'RACACORMAE', 'QTDGESTANT', 'QTDPARTNOR',\n",
+      "       'QTDPARTCES', 'IDADEPAI', 'DTULTMENST', 'SEMAGESTAC', 'TPMETESTIM',\n",
+      "       'CONSPRENAT', 'MESPRENAT', 'TPAPRESENT', 'STTRABPART', 'STCESPARTO',\n",
+      "       'TPNASCASSI', 'TPFUNCRESP', 'TPDOCRESP', 'DTDECLARAC', 'ESCMAEAGR1',\n",
+      "       'STDNEPIDEM', 'STDNNOVA', 'CODPAISRES', 'TPROBSON', 'PARIDADE',\n",
+      "       'KOTELCHUCK', 'CONTADOR', 'munResStatus', 'munResTipo', 'munResNome',\n",
+      "       'munResUf', 'munResLat', 'munResLon', 'munResAlt', 'munResArea'],\n",
+      "      dtype='object')\n",
+      "\n",
+      "Colunas não encontradas na base: []\n",
+      "\n",
+      "Colunas selecionadas na Tarefa 2:\n",
+      "Index(['IDADEMAE', 'ESTCIVMAE', 'ESCMAE', 'CONSULTAS', 'GESTACAO', 'APGAR5',\n",
+      "       'SEXO', 'LOCNASC', 'PARTO'],\n",
+      "      dtype='object')\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>IDADEMAE</th>\n",
+       "      <th>ESTCIVMAE</th>\n",
+       "      <th>ESCMAE</th>\n",
+       "      <th>CONSULTAS</th>\n",
+       "      <th>GESTACAO</th>\n",
+       "      <th>APGAR5</th>\n",
+       "      <th>SEXO</th>\n",
+       "      <th>LOCNASC</th>\n",
+       "      <th>PARTO</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>19</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>4</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>Masculino</td>\n",
+       "      <td>1</td>\n",
+       "      <td>CesÃ¡reo</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>29</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>4</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>Feminino</td>\n",
+       "      <td>1</td>\n",
+       "      <td>CesÃ¡reo</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>37</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>4</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>Feminino</td>\n",
+       "      <td>1</td>\n",
+       "      <td>CesÃ¡reo</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>30</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>12 anos ou mais</td>\n",
+       "      <td>3</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>Feminino</td>\n",
+       "      <td>1</td>\n",
+       "      <td>CesÃ¡reo</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>30</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>4</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>Feminino</td>\n",
+       "      <td>1</td>\n",
+       "      <td>CesÃ¡reo</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   IDADEMAE  ESTCIVMAE           ESCMAE  CONSULTAS         GESTACAO  APGAR5  \\\n",
+       "0        19        5.0      8 a 11 anos          4  37 a 41 semanas    10.0   \n",
+       "1        29        2.0      8 a 11 anos          4  37 a 41 semanas     9.0   \n",
+       "2        37        9.0      8 a 11 anos          4  37 a 41 semanas    10.0   \n",
+       "3        30        5.0  12 anos ou mais          3  37 a 41 semanas    10.0   \n",
+       "4        30        2.0      8 a 11 anos          4  37 a 41 semanas    10.0   \n",
+       "\n",
+       "        SEXO  LOCNASC     PARTO  \n",
+       "0  Masculino        1  CesÃ¡reo  \n",
+       "1   Feminino        1  CesÃ¡reo  \n",
+       "2   Feminino        1  CesÃ¡reo  \n",
+       "3   Feminino        1  CesÃ¡reo  \n",
+       "4   Feminino        1  CesÃ¡reo  "
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "\n",
+    "# --- TAREFA 1 (já feita) ---\n",
+    "# Exemplo de leitura (mantém do jeito que você já conseguiu rodar)\n",
+    "df = pd.read_csv(\"SINASC_RO_2019.csv\", sep=\",\", encoding=\"latin1\")\n",
+    "\n",
+    "# Só pra conferir\n",
+    "print(\"Colunas originais:\")\n",
+    "print(df.columns)\n",
+    "\n",
+    "# --- TAREFA 2: SELEÇÃO DAS COLUNAS DE INTERESSE (VERSÃO AJUSTADA) ---\n",
+    "\n",
+    "# 1) tira espaços em branco no começo/fim dos nomes (se tiver)\n",
+    "df.columns = df.columns.str.strip()\n",
+    "\n",
+    "# 2) define as colunas que queremos\n",
+    "colunas_desejadas = [\n",
+    "    'IDADEMAE',\n",
+    "    'ESTCIVMAE',\n",
+    "    'ESCMAE',\n",
+    "    'CONSULTAS',\n",
+    "    'GESTACAO',\n",
+    "    'APGAR5',\n",
+    "    'SEXO',\n",
+    "    'LOCNASC',\n",
+    "    'PARTO'\n",
+    "]\n",
+    "\n",
+    "# 3) mostra quais dessas não existem na base (se tiver erro de digitação a gente vê aqui)\n",
+    "nao_encontradas = [c for c in colunas_desejadas if c not in df.columns]\n",
+    "print(\"\\nColunas não encontradas na base:\", nao_encontradas)\n",
+    "\n",
+    "# 4) seleciona apenas as que existem pra não dar KeyError\n",
+    "colunas_ok = [c for c in colunas_desejadas if c in df.columns]\n",
+    "\n",
+    "df = df[colunas_ok].copy()\n",
+    "\n",
+    "print(\"\\nColunas selecionadas na Tarefa 2:\")\n",
+    "print(df.columns)\n",
+    "\n",
+    "df.head()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "TAREFA 3\n",
+    "\n",
+    "Ok, no item anterior você deve ter achado pouco prático ler a informação de tantas variáveis, muitas delas nem devem ser interesantes. Então crie uma seleção dessa base somente com as colunas que interessam. São elas:  ['LOCNASC', 'IDADEMAE', 'ESTCIVMAE', 'ESCMAE', 'QTDFILVIVO',   'GESTACAO', 'GRAVIDEZ', 'CONSULTAS', 'APGAR5']  Refaça a contagem de valores missings."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "PARTE 01 \"no item anterior você deve ter achado pouco prático ler a informação de tantas variáveis, muitas delas nem devem ser interesantes. Então crie uma seleção dessa base somente com as colunas que interessam. São elas:  ['LOCNASC', 'IDADEMAE', 'ESTCIVMAE', 'ESCMAE', 'QTDFILVIVO',   'GESTACAO', 'GRAVIDEZ', 'CONSULTAS', 'APGAR5']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>LOCNASC</th>\n",
+       "      <th>IDADEMAE</th>\n",
+       "      <th>ESTCIVMAE</th>\n",
+       "      <th>ESCMAE</th>\n",
+       "      <th>GESTACAO</th>\n",
+       "      <th>CONSULTAS</th>\n",
+       "      <th>APGAR5</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>19</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>29</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>9.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>37</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>30</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>12 anos ou mais</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>3</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1</td>\n",
+       "      <td>30</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   LOCNASC  IDADEMAE  ESTCIVMAE           ESCMAE         GESTACAO  CONSULTAS  \\\n",
+       "0        1        19        5.0      8 a 11 anos  37 a 41 semanas          4   \n",
+       "1        1        29        2.0      8 a 11 anos  37 a 41 semanas          4   \n",
+       "2        1        37        9.0      8 a 11 anos  37 a 41 semanas          4   \n",
+       "3        1        30        5.0  12 anos ou mais  37 a 41 semanas          3   \n",
+       "4        1        30        2.0      8 a 11 anos  37 a 41 semanas          4   \n",
+       "\n",
+       "   APGAR5  \n",
+       "0    10.0  \n",
+       "1     9.0  \n",
+       "2    10.0  \n",
+       "3    10.0  \n",
+       "4    10.0  "
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# tentativa 02 tarefa 03\n",
+    "\n",
+    "# --- TAREFA 3 ---\n",
+    "\n",
+    "# Lista ajustada com base no seu df.columns real\n",
+    "colunas_tarefa3 = [\n",
+    "    'LOCNASC',\n",
+    "    'IDADEMAE',\n",
+    "    'ESTCIVMAE',\n",
+    "    'ESCMAE',\n",
+    "    'GESTACAO',\n",
+    "    'CONSULTAS',\n",
+    "    'APGAR5'\n",
+    "]\n",
+    "\n",
+    "df_t3 = df[colunas_tarefa3].copy()\n",
+    "\n",
+    "df_t3.head()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "tarefa 03 - Parte 02 \"Refaça a contagem de valores missings\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "LOCNASC      0.00\n",
+       "IDADEMAE     0.00\n",
+       "ESTCIVMAE    1.17\n",
+       "ESCMAE       1.15\n",
+       "GESTACAO     4.56\n",
+       "CONSULTAS    0.00\n",
+       "APGAR5       0.38\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Quantidade de missings por coluna\n",
+    "df_t3.isna().sum()\n",
+    "#Percentual de missing:\n",
+    "(df_t3.isna().mean() * 100).round(2)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 04 ------"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 04 --- Apgar é uma nota que o pediatra dá ao bebê quando nasce de acordo com algumas características associadas principalmente à respiração. Apgar 1 e Apgar 5 são as notas 1 e 5 minutos do nascimento. Apgar5 será a nossa variável de interesse principal. Então remova todos os registros com Apgar5 não preenchido. Para esta seleção, conte novamente o número de linhas e o número de missings."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO\n",
+    "\n",
+    "TAREFA 04 — Remover registros com APGAR5 faltante + Recontar linhas e missings\n",
+    "passo 1 — Número de linhas antes da remoção"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Número de linhas ANTES da remoção: 27028\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Número de linhas ANTES da remoção:\", len(df_t3))\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Passo 2 — Remover registros onde APGAR5 está vazio"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>LOCNASC</th>\n",
+       "      <th>IDADEMAE</th>\n",
+       "      <th>ESTCIVMAE</th>\n",
+       "      <th>ESCMAE</th>\n",
+       "      <th>GESTACAO</th>\n",
+       "      <th>CONSULTAS</th>\n",
+       "      <th>APGAR5</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>19</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>29</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>9.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>37</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>30</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>12 anos ou mais</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>3</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1</td>\n",
+       "      <td>30</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27023</th>\n",
+       "      <td>1</td>\n",
+       "      <td>32</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>12 anos ou mais</td>\n",
+       "      <td>32 a 36 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>9.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27024</th>\n",
+       "      <td>1</td>\n",
+       "      <td>19</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>9.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27025</th>\n",
+       "      <td>1</td>\n",
+       "      <td>24</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27026</th>\n",
+       "      <td>1</td>\n",
+       "      <td>21</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>32 a 36 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>9.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27027</th>\n",
+       "      <td>1</td>\n",
+       "      <td>18</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>8 a 11 anos</td>\n",
+       "      <td>37 a 41 semanas</td>\n",
+       "      <td>4</td>\n",
+       "      <td>8.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>26925 rows × 7 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       LOCNASC  IDADEMAE  ESTCIVMAE           ESCMAE         GESTACAO  \\\n",
+       "0            1        19        5.0      8 a 11 anos  37 a 41 semanas   \n",
+       "1            1        29        2.0      8 a 11 anos  37 a 41 semanas   \n",
+       "2            1        37        9.0      8 a 11 anos  37 a 41 semanas   \n",
+       "3            1        30        5.0  12 anos ou mais  37 a 41 semanas   \n",
+       "4            1        30        2.0      8 a 11 anos  37 a 41 semanas   \n",
+       "...        ...       ...        ...              ...              ...   \n",
+       "27023        1        32        2.0  12 anos ou mais  32 a 36 semanas   \n",
+       "27024        1        19        1.0      8 a 11 anos  37 a 41 semanas   \n",
+       "27025        1        24        2.0      8 a 11 anos  37 a 41 semanas   \n",
+       "27026        1        21        2.0      8 a 11 anos  32 a 36 semanas   \n",
+       "27027        1        18        5.0      8 a 11 anos  37 a 41 semanas   \n",
+       "\n",
+       "       CONSULTAS  APGAR5  \n",
+       "0              4    10.0  \n",
+       "1              4     9.0  \n",
+       "2              4    10.0  \n",
+       "3              3    10.0  \n",
+       "4              4    10.0  \n",
+       "...          ...     ...  \n",
+       "27023          4     9.0  \n",
+       "27024          4     9.0  \n",
+       "27025          4    10.0  \n",
+       "27026          4     9.0  \n",
+       "27027          4     8.0  \n",
+       "\n",
+       "[26925 rows x 7 columns]"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_t4 = df_t3.dropna(subset=['APGAR5']).copy()\n",
+    "df_t4"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Passo 3 — Número de linhas depois da remoção"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Número de linhas DEPOIS da remoção: 26925\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Número de linhas DEPOIS da remoção:\", len(df_t4))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Passo 4 — Recontar valores missing"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "LOCNASC         0\n",
+       "IDADEMAE        0\n",
+       "ESTCIVMAE     315\n",
+       "ESCMAE        310\n",
+       "GESTACAO     1216\n",
+       "CONSULTAS       0\n",
+       "APGAR5          0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#Quantidade:\n",
+    "df_t4.isna().sum()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "LOCNASC      0.00\n",
+       "IDADEMAE     0.00\n",
+       "ESTCIVMAE    1.17\n",
+       "ESCMAE       1.15\n",
+       "GESTACAO     4.52\n",
+       "CONSULTAS    0.00\n",
+       "APGAR5       0.00\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# percentual\n",
+    "(df_t4.isna().mean() * 100).round(2)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENTO TAREFA 05\n",
+    "observe que as variáveis ['ESTCIVMAE', 'CONSULTAS'] possuem o código 9, que significa ignorado. Vamos assumir que o não preenchido é o mesmo que o código 9."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO A TAREFA 05 --\n",
+    "\n",
+    "observe que as variáveis ['ESTCIVMAE', 'CONSULTAS'] possuem o código 9, que significa ignorado. Vamos assumir que o não preenchido é o mesmo que o código 9."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# TAREFA 05 — Padronizar 'não preenchido' como código 9\n",
+    "\n",
+    "colunas_cod9 = ['ESTCIVMAE', 'CONSULTAS']\n",
+    "\n",
+    "for col in colunas_cod9:\n",
+    "    df_t4[col] = df_t4[col].fillna(9)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "ESTCIVMAE    0\n",
+       "CONSULTAS    0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# VERIFICANDO O RESULTADO\n",
+    "df_t4[colunas_cod9].isna().sum()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "ESTCIVMAE ESTCIVMAE\n",
+      "2.0    9906\n",
+      "1.0    8907\n",
+      "5.0    7145\n",
+      "9.0     459\n",
+      "4.0     451\n",
+      "3.0      57\n",
+      "Name: count, dtype: int64\n",
+      "CONSULTAS CONSULTAS\n",
+      "4    18587\n",
+      "3     5957\n",
+      "2     1359\n",
+      "1      972\n",
+      "9       50\n",
+      "Name: count, dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "# CONFIRMAR QUANTIDADE DE CODIGOS 9\n",
+    "for col in colunas_cod9:\n",
+    "    print(col, df_t4[col].value_counts())\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 06 - Substitua os valores faltantes da quantitativa (QTDFILVIVO) por zero."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "OBS: Sua base do SINASC-RO NÃO possui a coluna QTDFILVIVO\n",
+    "Ela simplesmente não existe no dataset — vimos isso no seu df.columns.\n",
+    "DUAS VERSOES ENTAO"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "A coluna 'QTDFILVIVO' não existe nesta base (SINASC-RO). Procedimento não aplicado.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# VERSAO 1 COM A BASE QUE TEM\n",
+    "# Tarefa 06 — Substituir faltantes de QTDFILVIVO por zero\n",
+    "\n",
+    "if 'QTDFILVIVO' in df_t4.columns:\n",
+    "    df_t4['QTDFILVIVO'] = df_t4['QTDFILVIVO'].fillna(0)\n",
+    "    print(\"Valores faltantes substituídos por zero.\")\n",
+    "else:\n",
+    "    print(\"A coluna 'QTDFILVIVO' não existe nesta base (SINASC-RO). Procedimento não aplicado.\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# versao COMO SE A COLUNA EXISTISSE, \n",
+    "#df_t4['QTDFILVIVO'] = df_t4['QTDFILVIVO'].fillna(0)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 07 ---Das restantes, decida que valores te parece mais adequado (um 'não preenchido' ou um valor 'mais provável' como no item anterior) e preencha. Justifique. Lembre-se de que tratamento de dados é trabalho do cientista, e que estamos tomando decisões a todo o momento - não há necessariamente certo e errado aqui."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "=== TAREFA 07 CONCLUÍDA ===\n",
+      "Valores faltantes após o tratamento:\n",
+      "\n",
+      "LOCNASC     0\n",
+      "ESCMAE      0\n",
+      "GESTACAO    0\n",
+      "IDADEMAE    0\n",
+      "dtype: int64\n",
+      "\n",
+      "Obs.: LOCNASC, ESCMAE e GESTACAO tiveram missings substituídos por 9.\n",
+      "     IDADEMAE mantém NaN por ser variável contínua.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# TAREFA 07\n",
+    "\n",
+    "# ============================================\n",
+    "# TAREFA 07 - Tratamento dos valores faltantes\n",
+    "# ============================================\n",
+    "\n",
+    "# Variáveis onde missing deve virar 9 (ignorado)\n",
+    "cols_cod9 = ['LOCNASC', 'ESCMAE', 'GESTACAO']\n",
+    "\n",
+    "for col in cols_cod9:\n",
+    "    df_t4[col] = df_t4[col].fillna(9)\n",
+    "\n",
+    "# IDADEMAE permanece com NaN\n",
+    "\n",
+    "# Resumo após o tratamento\n",
+    "print(\"=== TAREFA 07 CONCLUÍDA ===\")\n",
+    "print(\"Valores faltantes após o tratamento:\\n\")\n",
+    "print(df_t4[['LOCNASC', 'ESCMAE', 'GESTACAO', 'IDADEMAE']].isna().sum())\n",
+    "print(\"\\nObs.: LOCNASC, ESCMAE e GESTACAO tiveram missings substituídos por 9.\")\n",
+    "print(\"     IDADEMAE mantém NaN por ser variável contínua.\")\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO A TAREFA 08 ----------O Apgar possui uma classificação indicando se o bebê passou por asfixia:\n",
+    "\n",
+    "Entre 8 e 10 está em uma faixa 'normal'.\n",
+    "Entre 6 e 7, significa que o recém-nascido passou por 'asfixia leve'.\n",
+    "Entre 4 e 5 significa 'asfixia moderada'.\n",
+    "Entre 0 e 3 significa 'asfixia severa'.\n",
+    "Crie uma categorização dessa variável com essa codificação e calcule as frequências dessa categorização."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "=== TAREFA 08 CONCLUÍDA ===\n",
+      "\n",
+      "Frequências absolutas:\n",
+      "\n",
+      "APGAR5_CAT\n",
+      "normal              26463\n",
+      "asfixia leve          320\n",
+      "asfixia severa         74\n",
+      "asfixia moderada       68\n",
+      "Name: count, dtype: int64\n",
+      "\n",
+      "Frequências relativas (%):\n",
+      "\n",
+      "APGAR5_CAT\n",
+      "normal              98.28\n",
+      "asfixia leve         1.19\n",
+      "asfixia severa       0.27\n",
+      "asfixia moderada     0.25\n",
+      "Name: proportion, dtype: float64\n"
+     ]
+    }
+   ],
+   "source": [
+    "# ============================================\n",
+    "# TAREFA 08 - Categorização do APGAR5\n",
+    "# ============================================\n",
+    "\n",
+    "def classificar_apgar(valor):\n",
+    "    if 8 <= valor <= 10:\n",
+    "        return 'normal'\n",
+    "    elif 6 <= valor <= 7:\n",
+    "        return 'asfixia leve'\n",
+    "    elif 4 <= valor <= 5:\n",
+    "        return 'asfixia moderada'\n",
+    "    elif 0 <= valor <= 3:\n",
+    "        return 'asfixia severa'\n",
+    "    else:\n",
+    "        return 'valor inválido'\n",
+    "\n",
+    "# Criar nova coluna categorizada\n",
+    "df_t4['APGAR5_CAT'] = df_t4['APGAR5'].apply(classificar_apgar)\n",
+    "\n",
+    "# Frequência absoluta\n",
+    "freq_abs = df_t4['APGAR5_CAT'].value_counts()\n",
+    "\n",
+    "# Frequência relativa\n",
+    "freq_pct = df_t4['APGAR5_CAT'].value_counts(normalize=True) * 100\n",
+    "\n",
+    "print(\"=== TAREFA 08 CONCLUÍDA ===\\n\")\n",
+    "print(\"Frequências absolutas:\\n\")\n",
+    "print(freq_abs)\n",
+    "print(\"\\nFrequências relativas (%):\\n\")\n",
+    "print(freq_pct.round(2))\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "RESOLVENDO TAREFA 09 - 9. Renomeie as variáveis para que fiquem no snake case, ou seja, em letras minúsculas, com um underscore entre as palávras. Dica: repare que se você não quiser criar um dataframe novo, você vai precisar usar a opção inplace = True."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "=== TAREFA 09 CONCLUÍDA ===\n",
+      "Novos nomes das colunas:\n",
+      "\n",
+      "Index(['locnasc', 'idademae', 'estcivmae', 'escmae', 'gestacao', 'consultas',\n",
+      "       'apgar5', 'apgar5_cat'],\n",
+      "      dtype='object')\n"
+     ]
+    }
+   ],
+   "source": [
+    "# ============================================\n",
+    "# TAREFA 09 — Renomear colunas para snake_case\n",
+    "# ============================================\n",
+    "\n",
+    "df_t4.rename(columns=lambda x: x.lower(), inplace=True)\n",
+    "df_t4.rename(columns=lambda x: x.replace(\" \", \"_\"), inplace=True)\n",
+    "\n",
+    "print(\"=== TAREFA 09 CONCLUÍDA ===\")\n",
+    "print(\"Novos nomes das colunas:\\n\")\n",
+    "print(df_t4.columns)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "=== COLUNAS ANTES DA RENOMEAÇÃO ===\n",
+      "['locnasc', 'idademae', 'estcivmae', 'escmae', 'gestacao', 'consultas', 'apgar5', 'apgar5_cat']\n",
+      "\n",
+      "=== COLUNAS DEPOIS DA RENOMEAÇÃO ===\n",
+      "['locnasc', 'idademae', 'estcivmae', 'escmae', 'gestacao', 'consultas', 'apgar5', 'apgar5_cat']\n",
+      "\n",
+      "=== TAREFA 09 CONCLUÍDA ===\n",
+      "As variáveis foram renomeadas para o padrão snake_case.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# === COLUNAS ANTES DA RENOMEAÇÃO ===\n",
+    "print(\"=== COLUNAS ANTES DA RENOMEAÇÃO ===\")\n",
+    "print(list(df_t4.columns))\n",
+    "\n",
+    "# Renomeando\n",
+    "df_t4.rename(columns=lambda x: x.lower(), inplace=True)\n",
+    "df_t4.rename(columns=lambda x: x.replace(\" \", \"_\"), inplace=True)\n",
+    "\n",
+    "# === COLUNAS DEPOIS DA RENOMEAÇÃO ===\n",
+    "print(\"\\n=== COLUNAS DEPOIS DA RENOMEAÇÃO ===\")\n",
+    "print(list(df_t4.columns))\n",
+    "\n",
+    "print(\"\\n=== TAREFA 09 CONCLUÍDA ===\")\n",
+    "print(\"As variáveis foram renomeadas para o padrão snake_case.\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
